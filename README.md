@@ -13,7 +13,12 @@ and weither your test should be a unit test or a functional test.
 Installation
 ------------
 
-    npm install generator-intern
+    npm install -g generator-intern
+
+Usage
+-----
+
+    yo intern
 
 What it does not include
 ------------------------
