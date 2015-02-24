@@ -64,12 +64,6 @@ module.exports = yeoman.generators.Base.extend({
       var prefix = 'intern';
       var chai_prefix = prefix + '/chai!';
 
-      var lookup = {
-          'tdd' : 'tdd', 
-          'bdd' : 'bdd', 
-          'object' : 'registerSuite'
-      };
-
       // Name of the test
       // NOTE: .js will be added
       this.testName = props.testName;
@@ -87,27 +81,14 @@ module.exports = yeoman.generators.Base.extend({
 
       // required_libs,
       // List of dictionaries
-      //    key: define  = string included in e.g: define([/*dependencies*/]) 
-      //    key: include = string included in function params e.g. define([], function(param1, param2...)
+      //    key: varName = string, name of the variable e.g. var tdd = ...
+      //    key: require = string to be required e.g: require('intern!object')
       this.required_libs = [];
-
-      // TestStyle include
-      this.required_libs.push({
-          define:  prefix + '!' + this.testStyle,
-          include: lookup[this.testStyle],
-          comma: true
-      });
-
       for(var i = 0; i < props.required_libs.length; i++) {
             var obj = {
-                define:  chai_prefix + props.required_libs[i],
-                include: props.required_libs[i],
-                comma: false
+                varName: props.required_libs[i],
+                require: chai_prefix + props.required_libs[i]
             };
-
-            if(i < (props.required_libs.length - 1)) {
-                obj.comma = true;
-            }
             this.required_libs.push(obj);
       }
       done();
@@ -116,7 +97,10 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.template('test.js', path.join(this.testPath, this.testName + '.js'));
+      this.template(
+        this.testStyle + '.js', 
+        path.join(this.testPath, this.testName + '.js')
+      );
     }
   },
 
