@@ -1,13 +1,10 @@
 'use strict';
-var Base = require('yeoman-generator');
+var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var path  = require('path');
 
-module.exports = Base.extend({
-  initializing: function () {
-  },
-
+module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async();
 
@@ -95,15 +92,12 @@ module.exports = Base.extend({
     }.bind(this));
   },
 
-  writing: {
-    app: function () {
+  app: function () {
+      console.log('here')
       this.template(
         this.testStyle + '.js', 
         path.join(this.testPath, this.testName + '.js')
       );
-    }
   },
 
-  install: function () {
-  }
 });
